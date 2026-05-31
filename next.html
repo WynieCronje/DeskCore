@@ -4,172 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DeskCore • Beginner Core Strength</title>
+    
+    <!-- React + ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for JSX support -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Space+Grotesk:wght@600&amp;display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@600&display=swap');
         
-        body {
-            font-family: 'Inter', system_ui, sans-serif;
-        }
-        
-        .title-font {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .exercise-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
 
         .video-container {
             position: relative;
             padding-top: 56.25%;
         }
-        
         .video-container iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             border-radius: 16px;
         }
-
-        .check-circle {
-            transition: all 0.2s ease;
-        }
-
-        /* Plank Timer Styles */
         .plank-timer {
             font-family: monospace;
-            font-size: 2.25rem;
+            font-size: 2.75rem;
             font-weight: 700;
             letter-spacing: -2px;
-        }
-
-        @media (max-width: 640px) {
-            .exercise-card {
-                margin-bottom: 1.5rem;
-            }
-            
-            .set-row {
-                padding: 1.25rem 1.25rem !important;
-                min-height: 68px;
-            }
-            
-            .check-circle {
-                width: 48px !important;
-                height: 48px !important;
-            }
-        }
-
-        #progress-container {
-            position: sticky;
-            top: 0;
-            background-color: #0a0b0b;
-            z-index: 50;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-200 min-h-screen">
-    <div class="max-w-5xl mx-auto px-5 sm:px-6 py-8 sm:py-12">
-        
-        <!-- Header -->
-        <div class="flex flex-col items-center text-center mb-10">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-11 h-11 sm:w-12 sm:h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">💪</div>
-                <h1 class="title-font text-4xl sm:text-5xl font-semibold tracking-tighter text-white">DeskCore</h1>
-            </div>
-            <p class="text-emerald-400 text-xl font-medium mb-2">15-minute daily core reset</p>
-            <p class="max-w-md text-zinc-400 text-base sm:text-lg leading-relaxed">
-                Beginner-friendly program for people who sit at a desk all day.<br class="hidden sm:block">
-                Stronger core = better posture &amp; less back pain.
-            </p>
-            
-            <div class="mt-6 inline-flex items-center gap-2 bg-zinc-900 px-5 py-2.5 rounded-3xl text-sm">
-                <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
-                <span class="text-emerald-400 font-medium">No equipment • 15–20 minutes • 5 exercises</span>
-            </div>
-        </div>
+    <div id="root"></div>
 
-        <!-- Quick instructions -->
-        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 mb-8">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div>
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-8 h-8 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center font-bold text-sm">1</div>
-                        <h3 class="font-semibold text-base">Track every single set</h3>
-                    </div>
-                    <p class="text-zinc-400 text-sm">3 sets per exercise. Tap to check off as you finish.</p>
-                </div>
-                <div>
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-8 h-8 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center font-bold text-sm">2</div>
-                        <h3 class="font-semibold text-base">Rest 45–60 seconds</h3>
-                    </div>
-                    <p class="text-zinc-400 text-sm">Breathe deeply between sets.</p>
-                </div>
-                <div>
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-8 h-8 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center font-bold text-sm">3</div>
-                        <h3 class="font-semibold text-base">Progress daily</h3>
-                    </div>
-                    <p class="text-zinc-400 text-sm">Start easier if needed — you’ll improve fast!</p>
-                </div>
-            </div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-            <div class="mt-8 pt-6 border-t border-zinc-800 bg-emerald-950/50 rounded-2xl p-6 text-center">
-                <div class="inline-flex items-center gap-2 text-emerald-400 font-medium text-sm mb-2">
-                    <span class="bg-emerald-500 text-emerald-950 px-3 py-1 rounded-2xl">💡 BEST FOR BEGINNERS</span>
-                </div>
-                <p class="text-zinc-300 text-sm sm:text-base">
-                    <strong>Finish all 3 sets of one exercise before moving to the next.</strong><br>
-                    Better focus and form = faster results.
-                </p>
-            </div>
-            
-            <div class="mt-8 pt-8 border-t border-zinc-800 text-center text-xs text-zinc-500 flex items-center justify-center gap-2">
-                <span class="bg-amber-400 text-amber-950 px-2.5 py-1 rounded-xl font-medium">IMPORTANT</span>
-                <span>If you feel any back pain, stop and consult a doctor.</span>
-            </div>
-        </div>
-
-        <!-- Sticky Progress -->
-        <div id="progress-container" class="mb-8 rounded-3xl overflow-hidden">
-            <div class="flex justify-between items-baseline px-6 py-4 bg-zinc-900 border-b border-zinc-800">
-                <div class="text-sm font-medium text-zinc-400">TODAY'S SETS</div>
-                <div id="progress-text" class="text-3xl font-semibold text-emerald-400 tabular-nums">0/15</div>
-            </div>
-            <div class="h-2.5 bg-zinc-800">
-                <div id="progress-bar" 
-                     class="h-2.5 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-r-3xl w-0 transition-all duration-700"></div>
-            </div>
-            <div class="px-6 py-2 text-[10px] text-zinc-500">15 total sets • 3 per exercise</div>
-        </div>
-
-        <!-- Exercises -->
-        <div id="exercises-container" class="grid grid-cols-1 gap-8">
-            <!-- Populated by JS -->
-        </div>
-
-        <!-- Footer -->
-        <div class="mt-16 text-center">
-            <p class="text-zinc-500 text-sm mb-8">
-                Progress saved automatically in your browser.<br>
-                Resets every day at midnight.
-            </p>
-            
-            <button onclick="resetToday()" 
-                    class="w-full max-w-xs mx-auto flex items-center justify-center gap-3 bg-zinc-900 hover:bg-zinc-800 active:bg-zinc-700 border border-zinc-700 text-white px-8 py-5 rounded-3xl text-base font-medium transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.058 11H1M12 3v2m0 16v2m9-9H15m-6 0H3" />
-                </svg>
-                RESET TODAY'S PROGRESS
-            </button>
-        </div>
-    </div>
-
-    <script>
         const exercises = [
             {
                 id: "plank",
@@ -193,7 +67,7 @@
                 videoId: "g_BYB0R-4Ws",
                 setsReps: "3 sets of 10 reps per side",
                 rest: "45 seconds",
-                desc: "Lie on back, arms up. Slowly lower opposite arm &amp; leg while pressing lower back into floor."
+                desc: "Lie on back, arms up. Slowly lower opposite arm & leg while pressing lower back into floor."
             },
             {
                 id: "glute-bridge",
@@ -201,7 +75,7 @@
                 videoId: "8bbE64NuDTU",
                 setsReps: "3 sets of 12–15 reps",
                 rest: "45 seconds",
-                desc: "Lie on back, feet flat. Push through heels and squeeze glutes to lift hips until body is straight."
+                desc: "Lie on back, feet flat. Push through heels and squeeze glutes to lift hips."
             },
             {
                 id: "superman",
@@ -209,218 +83,245 @@
                 videoId: "J9zXkxUAfUA",
                 setsReps: "3 sets of 10–12 reps (hold 2–3s)",
                 rest: "45 seconds",
-                desc: "Lie face down. Lift arms, chest, and legs off the floor like you're flying. Keep neck neutral."
+                desc: "Lie face down. Lift arms, chest, and legs off the floor like you're flying."
             }
-        ]
+        ];
 
-        const TOTAL_SETS = exercises.length * 3
+        const TOTAL_SETS = exercises.length * 3;
 
-        let progressData = { lastDate: "", completed: [] }
-        let plankTimerInterval = null
-        let plankSeconds = 0
-        let isPlankRunning = false
+        function App() {
+            const [progressData, setProgressData] = useState({ lastDate: "", completed: [] });
+            const [plankSeconds, setPlankSeconds] = useState(0);
+            const [isPlankRunning, setIsPlankRunning] = useState(false);
 
-        function getToday() {
-            const now = new Date()
-            return now.getFullYear() + '-' + 
-                   String(now.getMonth() + 1).padStart(2, '0') + '-' + 
-                   String(now.getDate()).padStart(2, '0')
-        }
+            // Load progress
+            useEffect(() => {
+                const saved = localStorage.getItem('deskCoreTracker');
+                const today = new Date().toISOString().split('T')[0];
 
-        function loadProgress() {
-            const saved = localStorage.getItem('deskCoreTracker')
-            const today = getToday()
-            
-            if (saved) {
-                progressData = JSON.parse(saved)
-                if (progressData.lastDate !== today) {
-                    progressData.completed = []
-                    progressData.lastDate = today
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    if (data.lastDate === today) {
+                        setProgressData(data);
+                    } else {
+                        setProgressData({ lastDate: today, completed: [] });
+                    }
+                } else {
+                    setProgressData({ lastDate: today, completed: [] });
                 }
-            } else {
-                progressData = { lastDate: today, completed: [] }
-            }
-            
-            saveProgress()
-            renderExercises()
-            renderProgress()
-        }
+            }, []);
 
-        function saveProgress() {
-            localStorage.setItem('deskCoreTracker', JSON.stringify(progressData))
-        }
+            // Save progress
+            useEffect(() => {
+                localStorage.setItem('deskCoreTracker', JSON.stringify(progressData));
+            }, [progressData]);
 
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60)
-            const secs = seconds % 60
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`
-        }
-
-        function startPlankTimer() {
-            if (plankTimerInterval) clearInterval(plankTimerInterval)
-            
-            isPlankRunning = true
-            plankTimerInterval = setInterval(() => {
-                plankSeconds++
-                document.getElementById('plank-timer-display').textContent = formatTime(plankSeconds)
-            }, 1000)
-        }
-
-        function stopPlankTimer() {
-            if (plankTimerInterval) {
-                clearInterval(plankTimerInterval)
-                plankTimerInterval = null
-            }
-            isPlankRunning = false
-        }
-
-        function resetPlankTimer() {
-            stopPlankTimer()
-            plankSeconds = 0
-            document.getElementById('plank-timer-display').textContent = "0:00"
-        }
-
-        function togglePlankTimer() {
-            if (isPlankRunning) {
-                stopPlankTimer()
-            } else {
-                startPlankTimer()
-            }
-        }
-
-        function renderExercises() {
-            const container = document.getElementById('exercises-container')
-            container.innerHTML = ''
-            
-            exercises.forEach(ex => {
-                let setsHTML = ''
-                
-                for (let i = 1; i <= 3; i++) {
-                    const setId = `${ex.id}-set${i}`
-                    const isDone = progressData.completed.includes(setId)
-                    
-                    setsHTML += `
-                        <div class="set-row flex items-center justify-between bg-zinc-950 rounded-2xl px-5 py-5">
-                            <div class="flex items-center gap-4">
-                                <div class="w-8 h-8 bg-zinc-800 text-zinc-400 rounded-2xl flex items-center justify-center text-sm font-bold">${i}</div>
-                                <span class="font-medium text-zinc-200 text-base">Set ${i}</span>
-                            </div>
-                            <label class="relative flex items-center cursor-pointer">
-                                <input 
-                                    type="checkbox" 
-                                    id="check-${setId}"
-                                    ${isDone ? 'checked' : ''}
-                                    onchange="toggleComplete('${setId}')"
-                                    class="peer sr-only">
-                                <div class="check-circle w-10 h-10 border-2 border-zinc-700 rounded-3xl flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-all">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white hidden peer-checked:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7" />
-                                    </svg>
-                                </div>
-                            </label>
-                        </div>
-                    `
+            // Plank Timer
+            useEffect(() => {
+                let interval = null;
+                if (isPlankRunning) {
+                    interval = setInterval(() => {
+                        setPlankSeconds(prev => prev + 1);
+                    }, 1000);
                 }
+                return () => clearInterval(interval);
+            }, [isPlankRunning]);
 
-                let extraHTML = ''
-                if (ex.id === "plank") {
-                    extraHTML = `
-                        <div class="mt-6 p-5 bg-zinc-950 rounded-3xl border border-zinc-800">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="text-sm font-medium text-emerald-400">PLANK TIMER</div>
-                                <div onclick="resetPlankTimer()" class="text-xs text-zinc-400 hover:text-white cursor-pointer">RESET</div>
-                            </div>
-                            <div id="plank-timer-display" class="plank-timer text-white text-center mb-5">0:00</div>
-                            <button onclick="togglePlankTimer()" 
-                                    id="plank-timer-btn"
-                                    class="w-full py-4 rounded-3xl font-medium text-base transition-all bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700">
-                                START TIMER
-                            </button>
-                            <p class="text-center text-xs text-zinc-500 mt-3">Tap to start / stop • Auto counts up</p>
-                        </div>
-                    `
+            const togglePlankTimer = () => {
+                setIsPlankRunning(!isPlankRunning);
+            };
+
+            const resetPlankTimer = () => {
+                setIsPlankRunning(false);
+                setPlankSeconds(0);
+            };
+
+            const formatTime = (sec) => {
+                const m = Math.floor(sec / 60);
+                const s = sec % 60;
+                return `${m}:${s < 10 ? '0' : ''}${s}`;
+            };
+
+            const toggleComplete = (setId) => {
+                setProgressData(prev => ({
+                    ...prev,
+                    completed: prev.completed.includes(setId)
+                        ? prev.completed.filter(id => id !== setId)
+                        : [...prev.completed, setId]
+                }));
+            };
+
+            const resetToday = () => {
+                if (window.confirm("Reset today's progress?\n\nYou can start again today.")) {
+                    const today = new Date().toISOString().split('T')[0];
+                    setProgressData({ lastDate: today, completed: [] });
+                    resetPlankTimer();
                 }
-                
-                const cardHTML = `
-                    <div class="exercise-card bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden">
-                        <div class="video-container bg-black">
-                            <iframe 
-                                src="https://www.youtube.com/embed/${ex.videoId}" 
-                                title="${ex.name} tutorial"
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                            </iframe>
+            };
+
+            const completedCount = progressData.completed.length;
+            const progressPercent = Math.round((completedCount / TOTAL_SETS) * 100);
+
+            return (
+                <div className="max-w-5xl mx-auto px-5 sm:px-6 py-8">
+                    {/* Header */}
+                    <div className="flex flex-col items-center text-center mb-10">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-3xl">💪</div>
+                            <h1 className="title-font text-5xl font-semibold tracking-tighter">DeskCore</h1>
                         </div>
-                        
-                        <div class="p-6 sm:p-8">
-                            <div class="flex justify-between items-start mb-6">
-                                <div>
-                                    <h2 class="text-2xl font-semibold text-white">${ex.name}</h2>
-                                    <p class="text-emerald-400 text-base mt-1">${ex.setsReps}</p>
+                        <p className="text-emerald-400 text-xl font-medium">15-minute daily core reset</p>
+                    </div>
+
+                    {/* Instructions */}
+                    <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 mb-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            <div>
+                                <div className="flex items-center gap-3 mb-3">
+                                    <div className="w-8 h-8 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center font-bold">1</div>
+                                    <h3 className="font-semibold">Track every set</h3>
                                 </div>
+                                <p className="text-zinc-400 text-sm">Tap the checkbox when you finish each set.</p>
                             </div>
-                            
-                            <p class="text-zinc-400 text-base leading-relaxed mb-8">${ex.desc}</p>
-                            
-                            ${extraHTML}
-                            
-                            <div class="mt-8 pt-6 border-t border-zinc-800">
-                                <div class="flex items-center justify-between mb-5">
-                                    <p class="text-xs uppercase tracking-widest text-zinc-500 font-medium">YOUR 3 SETS</p>
-                                    <span class="text-xs bg-zinc-800 px-4 py-1.5 rounded-3xl">REST ${ex.rest}</span>
+                            <div>
+                                <div className="flex items-center gap-3 mb-3">
+                                    <div className="w-8 h-8 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center font-bold">2</div>
+                                    <h3 className="font-semibold">Rest between sets</h3>
                                 </div>
-                                <div class="space-y-3">
-                                    ${setsHTML}
+                                <p className="text-zinc-400 text-sm">45–60 seconds. Breathe deeply.</p>
+                            </div>
+                            <div>
+                                <div className="flex items-center gap-3 mb-3">
+                                    <div className="w-8 h-8 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center font-bold">3</div>
+                                    <h3 className="font-semibold">Finish one exercise first</h3>
                                 </div>
+                                <p className="text-zinc-400 text-sm">Best for beginners and good form.</p>
                             </div>
                         </div>
                     </div>
-                `
-                container.innerHTML += cardHTML
-            })
+
+                    {/* Progress Bar */}
+                    <div className="mb-8 rounded-3xl overflow-hidden sticky top-0 z-50 bg-zinc-950 border-b border-zinc-800">
+                        <div className="flex justify-between items-baseline px-6 py-4 bg-zinc-900">
+                            <div className="text-sm font-medium text-zinc-400">TODAY'S SETS</div>
+                            <div className="text-3xl font-semibold text-emerald-400 tabular-nums">{completedCount}/{TOTAL_SETS}</div>
+                        </div>
+                        <div className="h-2.5 bg-zinc-800">
+                            <div className="h-2.5 bg-gradient-to-r from-emerald-400 to-teal-400 transition-all duration-700" 
+                                 style={{ width: `${progressPercent}%` }}></div>
+                        </div>
+                    </div>
+
+                    {/* Exercises */}
+                    <div className="space-y-8">
+                        {exercises.map(ex => {
+                            const isPlank = ex.id === "plank";
+                            return (
+                                <div key={ex.id} className="exercise-card bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden">
+                                    <div className="video-container bg-black">
+                                        <iframe 
+                                            src={`https://www.youtube.com/embed/${ex.videoId}`}
+                                            title={ex.name}
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen>
+                                        </iframe>
+                                    </div>
+
+                                    <div className="p-6 sm:p-8">
+                                        <div className="flex justify-between items-start mb-6">
+                                            <div>
+                                                <h2 className="text-2xl font-semibold text-white">{ex.name}</h2>
+                                                <p className="text-emerald-400 mt-1">{ex.setsReps}</p>
+                                            </div>
+                                        </div>
+
+                                        <p className="text-zinc-400 leading-relaxed mb-8">{ex.desc}</p>
+
+                                        {/* Plank Timer */}
+                                        {isPlank && (
+                                            <div className="mb-8 p-6 bg-zinc-950 rounded-3xl border border-zinc-800">
+                                                <div className="flex justify-between items-center mb-4">
+                                                    <div className="font-medium text-emerald-400">PLANK TIMER</div>
+                                                    <button onClick={resetPlankTimer} className="text-xs text-zinc-400 hover:text-white">RESET</button>
+                                                </div>
+                                                <div className="plank-timer text-white text-center mb-6">
+                                                    {formatTime(plankSeconds)}
+                                                </div>
+                                                <button 
+                                                    onClick={togglePlankTimer}
+                                                    className={`w-full py-5 rounded-3xl font-semibold text-lg transition-all ${
+                                                        isPlankRunning 
+                                                            ? 'bg-red-600 hover:bg-red-500' 
+                                                            : 'bg-emerald-600 hover:bg-emerald-500'
+                                                    }`}>
+                                                    {isPlankRunning ? 'STOP TIMER' : 'START TIMER'}
+                                                </button>
+                                                <p className="text-center text-xs text-zinc-500 mt-3">Single tap to start / stop</p>
+                                            </div>
+                                        )}
+
+                                        {/* Sets */}
+                                        <div className="border-t border-zinc-800 pt-6">
+                                            <div className="flex justify-between mb-5">
+                                                <p className="text-xs uppercase tracking-widest text-zinc-500 font-medium">YOUR 3 SETS</p>
+                                                <span className="text-xs bg-zinc-800 px-4 py-1.5 rounded-3xl">REST {ex.rest}</span>
+                                            </div>
+                                            <div className="space-y-3">
+                                                {[1, 2, 3].map(i => {
+                                                    const setId = `${ex.id}-set${i}`;
+                                                    const isDone = progressData.completed.includes(setId);
+                                                    return (
+                                                        <div key={i} className="flex items-center justify-between bg-zinc-950 rounded-2xl px-6 py-5">
+                                                            <div className="flex items-center gap-4">
+                                                                <div className="w-8 h-8 bg-zinc-800 text-zinc-400 rounded-2xl flex items-center justify-center text-sm font-bold">{i}</div>
+                                                                <span className="font-medium">Set {i}</span>
+                                                            </div>
+                                                            <label className="cursor-pointer">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    checked={isDone}
+                                                                    onChange={() => toggleComplete(setId)}
+                                                                    className="peer sr-only"
+                                                                />
+                                                                <div className={`w-11 h-11 border-2 rounded-3xl flex items-center justify-center transition-all ${
+                                                                    isDone ? 'bg-emerald-500 border-emerald-500' : 'border-zinc-700'
+                                                                }`}>
+                                                                    {isDone && (
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7" />
+                                                                        </svg>
+                                                                    )}
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Footer */}
+                    <div className="mt-16 text-center">
+                        <button 
+                            onClick={resetToday}
+                            className="w-full max-w-xs mx-auto flex items-center justify-center gap-3 bg-zinc-900 hover:bg-zinc-800 active:bg-zinc-700 border border-zinc-700 text-white px-8 py-5 rounded-3xl font-medium">
+                            RESET TODAY'S PROGRESS
+                        </button>
+                    </div>
+                </div>
+            );
         }
 
-        function toggleComplete(setId) {
-            const checkbox = document.getElementById(`check-${setId}`)
-            const isChecked = checkbox.checked
-            
-            if (isChecked) {
-                if (!progressData.completed.includes(setId)) {
-                    progressData.completed.push(setId)
-                }
-            } else {
-                progressData.completed = progressData.completed.filter(id => id !== setId)
-            }
-            
-            saveProgress()
-            renderProgress()
-        }
-
-        function renderProgress() {
-            const completedCount = progressData.completed.length
-            const percentage = Math.round((completedCount / TOTAL_SETS) * 100)
-            
-            document.getElementById('progress-text').textContent = `${completedCount}/${TOTAL_SETS}`
-            document.getElementById('progress-bar').style.width = `${percentage}%`
-        }
-
-        function resetToday() {
-            if (confirm("Reset today's progress?\n\nYou can start the workout again today if you want.")) {
-                progressData.completed = []
-                saveProgress()
-                renderExercises()
-                renderProgress()
-                resetPlankTimer()
-            }
-        }
-
-        function initializeApp() {
-            renderExercises()
-            loadProgress()
-        }
-
-        window.onload = initializeApp
+        // Render the app
+        ReactDOM.render(
+            React.createElement(App),
+            document.getElementById('root')
+        );
     </script>
 </body>
 </html>
